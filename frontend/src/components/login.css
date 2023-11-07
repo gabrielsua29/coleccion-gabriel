@@ -1,0 +1,49 @@
+.login_container {
+    margin: auto;
+    width: 90%;
+    padding: 10px;
+}
+
+.login_container-grid {
+    position: absolute;
+    left: 49%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+}
+
+.login_container-paper {
+    height: 400px;
+    width: 400px;
+}
+
+.form {
+    position: absolute;
+    left: 15%;
+    top: 20%;    
+}
+
+.icon {
+    position: relative;
+    left: 67%;
+}
+
+.login_title {
+    position: relative;
+    left: 42%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.username_text {
+    display: block;
+    left: 28%;
+}
+
+.password_text {
+    display: block;
+    left: 28%;
+}
+
+.login_button {
+    left: 42%;
+}
