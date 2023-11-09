@@ -45,7 +45,25 @@ app.get('/addItem', async function(req, res, next) {
         console.error(`Error while inserting items `, err.message);
         next(err);
     }
-})   
+})
+
+app.get('/getItems', async function(req, res, next) {
+    try {
+        res.json(await items.getData(req, res ))
+    } catch (err) {
+        console.error(`Error while getting items `, err.message);
+        next(err);
+    }
+})
+
+app.get('/deleteItem', async function(req, res, next) {
+    try {
+        res.json(await items.deleteData (req, res))
+    } catch (err) {
+        console.error(`Error while deleting items `, err.message);
+        next(err);
+    }
+})
 
 //Iniciamos la API
 app.listen(port)

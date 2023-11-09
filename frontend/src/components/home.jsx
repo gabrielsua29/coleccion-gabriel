@@ -3,9 +3,10 @@ import React from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import { Button, Typography, AppBar, Container, Toolbar, Grid, Paper, Box, TextField } from "@mui/material"
+import { Button, Typography, AppBar, Container, Toolbar, Grid, Paper, Box, TextField, TableContainer, TableCell, Table, TableHead, TableRow, TableBody } from "@mui/material"
 import { loginActions } from "../store/storelogin"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import './home.css'
 
 function Home() {
@@ -19,6 +20,7 @@ function Home() {
         if (!isLoggedin) {
             navigate('/')
         }
+        handleGetItem()
     }, [isLoggedin, navigate])
     //Almacenamos en la variable userData el estado del store
     
@@ -26,6 +28,7 @@ function Home() {
     console.log(userData)
 
     const [item, setItem] = useState({nombre: '', marca:'', tipo:'', precio:''})
+    const [tableData, setTableData] = useState([])
 
     function handleLogout(e) {
         dispatch(loginActions.logout)
@@ -48,41 +51,77 @@ function Home() {
             if (Response) {
                 if (Response > 0) {
                     alert('Datos guardados con éxito.')
+                    handleGetItem()
+                }
+            }
+        })
+     }
+
+     function handleGetItem(e) {
+        fetch(`http://localhost:3030/getItems?`)
+        .then(Response => Response.json())
+        .then(Response => {
+            if (Response) {
+                console.log(Response)
+                if (Response !== 0) {
+                    setTableData(Response.data)
+                } else {
+                    console.log("Error al hacer el select")
+                }
+            }
+        })
+     }
+
+     function handleDeleteItem(id) {
+        fetch(`http://localhost:3030/deleteItem?id=${id}`)
+        .then(Response => Response.json())
+        .then(Response => {
+            if (Response) {
+                if (Response > 0) {
+                    alert('Datos eliminados con éxito.')
+                    handleGetItem()
                 }
             }
         })
      }
 
     return <>
-        <AppBar position='static'>
+        <AppBar position='relative' className="appBarMenu">
             <Container>
                 <Toolbar>
-                    <Grid container>
-                        <Grid item xs={12} md={6} lg={3}>
-                            <AccountCircleIcon />
-                                <Typography className="username">{userData.userName}</Typography>
+                    <Grid container className="menuContainer">
+                        <Grid item xs={8} md={5} lg={2} className="iconGrid">
+                            <AccountCircleIcon fontSize="large" />
+                            <Typography variant='h6' component='h6' className='username'>{userData.userName}</Typography>
                         </Grid>
-                        <Grid item xs={8} md={6} lg={3}>
-                        <Link to='/home'>Inicio</Link>
+                        <Grid item xs={8} md={5} lg={2}>
+                            <Link to='/home'>
+                                <Typography variant='h6' component='h6' className='username'>Inicio</Typography>
+                            </Link>
                         </Grid>
-                        <Grid item xs={8} md={6} lg={3}>
-                            <Link to='/informes'>Informes</Link>
+                        <Grid item xs={8} md={5} lg={2}>
+                            <Link to='/informes'>
+                            <Typography variant='h6' component='h6' className='username'>Informes</Typography>
+                            </Link>
                         </Grid>
-                        <Grid item xs={8} md={6} lg={3}>
-                            <Link to='/ayuda'>Ayuda</Link>
+                        <Grid item xs={8} md={5} lg={2}>
+                            <Link to='/ayuda'>
+                            <Typography variant='h6' component='h6' className='username'>Ayuda</Typography>
+                            </Link>
                         </Grid>
-                        <Grid item xs={8} md={6} lg={3}>
-                            <Button variant='text' onClick = {handleLogout}>Salir</Button>
+                        <Grid item xs={8} md={5} lg={2}>
+                            <Button variant='contained' onClick = {handleLogout}>Salir</Button>
                         </Grid>
                     </Grid>
                 </Toolbar>
             </Container>
         </AppBar>
 
-        <Paper elevation={5}>
+        <Paper elevation={3}>
             <Box component='form' autoComplete='off' onSubmit={handleSaveItem} >
-                <Grid container>
-                    <Grid item xs={8} md={3}>
+                <Grid container className="textFieldsContainer">
+                    <Grid item xs={6} md={3}>
+                        <br/>
                         <TextField
                             label='Nombre'
                             required
@@ -93,7 +132,8 @@ function Home() {
                         >
                         </TextField>
                     </Grid>
-                    <Grid item xs={8} md={3}>
+                    <Grid item xs={6} md={3}>
+                        <br/>
                         <TextField
                             label='Marca'
                             required
@@ -102,7 +142,8 @@ function Home() {
                         >
                         </TextField>   
                     </Grid>    
-                    <Grid item xs={8} md={3}>
+                    <Grid item xs={6} md={3}>
+                        <br/>
                         <TextField
                             label='Tipo'
                             required
@@ -111,7 +152,8 @@ function Home() {
                         >
                         </TextField>    
                     </Grid>
-                    <Grid item xs={8} md={3}>
+                    <Grid item xs={6} md={3}>
+                        <br/>
                         <TextField
                             label='Precio'
                             required
@@ -120,12 +162,44 @@ function Home() {
                         >
                         </TextField>
                     </Grid>
-                    <Grid item xs={8} md={3}>
-                        <Button type='submit' variant='contained'>Añadir</Button>
+                    <Grid item xs={6} md={3}>
+                        <Grid item xs={5} md={2}>
+                            <br/>
+                            <Button type='submit' variant='contained' className="addButton">Añadir</Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Box>
         </Paper>
+
+        <TableContainer>
+            <Table aria-label=''>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Eliminar</TableCell>
+                        <TableCell>Nombre</TableCell>
+                        <TableCell>Marca</TableCell>
+                        <TableCell>Tipo</TableCell>
+                        <TableCell>Precio</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {tableData.map((row) => (
+                    <TableRow key={row.id}>
+                        <TableCell>
+                            <Button onClick={() => handleDeleteItem(row.id)}>
+                                <DeleteForeverIcon />
+                            </Button>
+                        </TableCell>
+                        <TableCell>{row.nombre}</TableCell>
+                        <TableCell>{row.marca}</TableCell>
+                        <TableCell>{row.tipo}</TableCell>
+                        <TableCell>{row.precio}</TableCell>
+                    </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     </>
 }
 

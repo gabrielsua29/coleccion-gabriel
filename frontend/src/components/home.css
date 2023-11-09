@@ -1,4 +1,29 @@
+.appBarMenu {
+    padding-right: 30%;
+    padding-left: 1%;
+    
+}
+
+.menuContainer {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    justify-content: flex-start;
+}
+
+.iconGrid {
+    display: flex;
+    align-items: center;
+}
+
 .username {
-    display: inline;
-    padding-left: 0.4em;
+    padding-left: 0.3em;
+}
+
+.textFieldsContainer {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.addButton {
+    margin-left: 50%;
 }
