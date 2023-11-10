@@ -162,11 +162,9 @@ function Home() {
                         >
                         </TextField>
                     </Grid>
-                    <Grid item xs={6} md={3}>
-                        <Grid item xs={5} md={2}>
-                            <br/>
-                            <Button type='submit' variant='contained' className="addButton">Añadir</Button>
-                        </Grid>
+                    <Grid item xs={1} md={10.5} lg={10}>
+                        <br/>
+                        <Button type='submit' variant='contained' className="addButton">Añadir</Button>
                     </Grid>
                 </Grid>
             </Box>
