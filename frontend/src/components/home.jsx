@@ -1,39 +1,30 @@
 import React from "react"
 //Importamos el useSelector del react-redux
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from "react-router-dom"
-import { Button, Typography, AppBar, Container, Toolbar, Grid, Paper, Box, TextField, TableContainer, TableCell, Table, TableHead, TableRow, TableBody } from "@mui/material"
-import { loginActions } from "../store/storelogin"
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useNavigate } from "react-router-dom"
+import { Button, Grid, Paper, Box, TextField, TableContainer, TableCell, Table, TableHead, TableRow, TableBody } from "@mui/material"
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import './home.css'
+import Topbar from "./Topbar"
 
 function Home() {
-    const dispatch = useDispatch()
+
     const navigate = useNavigate()
     //const userData = useSelector(state => state.login)
     const userData = useSelector(state => state.login)
     //Trozo de código donde vamos a usar el useEffect(): siempre los hooks van al principio del componente
     const isLoggedin = userData.isAutenticated
     useEffect(() => {
-        if (!isLoggedin) {
-            navigate('/')
-        }
         handleGetItem()
     }, [isLoggedin, navigate])
     //Almacenamos en la variable userData el estado del store
-    
+
     //Comprobamos por la consola qué obtenemos en userData
     console.log(userData)
 
     const [item, setItem] = useState({nombre: '', marca:'', tipo:'', precio:''})
     const [tableData, setTableData] = useState([])
-
-    function handleLogout(e) {
-        dispatch(loginActions.logout)
-        navigate('/')
-    }
 
     function handleSaveItem(e) {
         e.preventDefault(); // Para que no mande el formulario por defecto
@@ -51,6 +42,7 @@ function Home() {
             if (Response) {
                 if (Response > 0) {
                     alert('Datos guardados con éxito.')
+                    setItem({...item, nombre:'', marca:'', tipo:'', precio:''})
                     handleGetItem()
                 }
             }
@@ -86,36 +78,7 @@ function Home() {
      }
 
     return <>
-        <AppBar position='relative' className="appBarMenu">
-            <Container>
-                <Toolbar>
-                    <Grid container className="menuContainer">
-                        <Grid item xs={8} md={5} lg={2} className="iconGrid">
-                            <AccountCircleIcon fontSize="large" />
-                            <Typography variant='h6' component='h6' className='username'>{userData.userName}</Typography>
-                        </Grid>
-                        <Grid item xs={8} md={5} lg={2}>
-                            <Link to='/home'>
-                                <Typography variant='h6' component='h6' className='username'>Inicio</Typography>
-                            </Link>
-                        </Grid>
-                        <Grid item xs={8} md={5} lg={2}>
-                            <Link to='/informes'>
-                            <Typography variant='h6' component='h6' className='username'>Informes</Typography>
-                            </Link>
-                        </Grid>
-                        <Grid item xs={8} md={5} lg={2}>
-                            <Link to='/ayuda'>
-                            <Typography variant='h6' component='h6' className='username'>Ayuda</Typography>
-                            </Link>
-                        </Grid>
-                        <Grid item xs={8} md={5} lg={2}>
-                            <Button variant='contained' onClick = {handleLogout}>Salir</Button>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </Container>
-        </AppBar>
+        <Topbar/>
 
         <Paper elevation={3}>
             <Box component='form' autoComplete='off' onSubmit={handleSaveItem} >
@@ -174,7 +137,9 @@ function Home() {
             <Table aria-label=''>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Eliminar</TableCell>
+                        {userData.userRol === 'admin' &&
+                            <TableCell>Eliminar</TableCell>
+                        }
                         <TableCell>Nombre</TableCell>
                         <TableCell>Marca</TableCell>
                         <TableCell>Tipo</TableCell>
@@ -184,11 +149,13 @@ function Home() {
                 <TableBody>
                     {tableData.map((row) => (
                     <TableRow key={row.id}>
-                        <TableCell>
-                            <Button onClick={() => handleDeleteItem(row.id)}>
-                                <DeleteForeverIcon />
-                            </Button>
-                        </TableCell>
+                        {userData.userRol === 'admin' &&
+                            <TableCell>
+                                <Button onClick={() => handleDeleteItem(row.id)}>
+                                    <DeleteForeverIcon />
+                                </Button>
+                            </TableCell>
+                        }
                         <TableCell>{row.nombre}</TableCell>
                         <TableCell>{row.marca}</TableCell>
                         <TableCell>{row.tipo}</TableCell>
