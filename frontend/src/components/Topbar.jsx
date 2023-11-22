@@ -13,12 +13,12 @@ function Topbar() {
     const navigate = useNavigate()
     const userData = useSelector(state => state.login)
     const isLoggedin = userData.isAutenticated
-    useEffect(() => {
+    /*useEffect(() => {
         console.log(isLoggedin)
         if (!isLoggedin) {
             navigate('/')
         }
-    }, [isLoggedin, navigate])
+    }, [isLoggedin, navigate])*/
 
     const handleLogout = () => {
         dispatch(loginActions.logout)
