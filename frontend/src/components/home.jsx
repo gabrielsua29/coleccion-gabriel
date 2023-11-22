@@ -17,11 +17,11 @@ function Home() {
     const isLoggedin = userData.isAutenticated
     useEffect(() => {
         handleGetItem()
+        console.log("estoy aqui")
+        console.log(userData)
+        // eslint-disable-next-line
     }, [isLoggedin, navigate])
     //Almacenamos en la variable userData el estado del store
-
-    //Comprobamos por la consola qué obtenemos en userData
-    console.log(userData)
 
     const [item, setItem] = useState({nombre: '', marca:'', tipo:'', precio:''})
     const [tableData, setTableData] = useState([])

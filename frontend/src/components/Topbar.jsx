@@ -14,16 +14,16 @@ function Topbar() {
     const userData = useSelector(state => state.login)
     const isLoggedin = userData.isAutenticated
     useEffect(() => {
+        console.log(isLoggedin)
         if (!isLoggedin) {
             navigate('/')
         }
     }, [isLoggedin, navigate])
 
-    function handleLogout(e) {
+    const handleLogout = () => {
         dispatch(loginActions.logout)
         navigate('/')
     }
-
 
     return <>
          <AppBar position='relative' className="appBarMenu">
