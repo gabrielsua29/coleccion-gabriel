@@ -5,18 +5,18 @@ import InformeColeccion from "./InformeColeccion";
 
 function Informes() {
 
-    var isPressed = false
-    const [item, setItem] = useState({nombre:'', marca:'', tipo:'', precio:''})
+    const [isPressed, setIsPressed] = useState(false)
+    const [item, setItem] = useState([])
 
     function handleButton() {
-        isPressed = true
+        setIsPressed(true)
         fetch(`http://localhost:3030/getItems?`)
         .then(Response => Response.json())
         .then(Response => {
             if (Response) {
-                console.log(Response)
+                console.log(Response.data)
                 if (Response !== 0) {
-                    setItem({...item, nombre:'', marca:'', tipo:'', precio:''})
+                    setItem(Response.data)
                 } else {
                     console.log("Error al hacer el select")
                 }
@@ -30,7 +30,7 @@ function Informes() {
             <Button variant='contained' onClick={handleButton}>COLECCIÓN INFORMES</Button>
         </Paper>
         {isPressed=== true &&
-            <InformeColeccion item = {item}/>
+            <InformeColeccion data={item}/>
         }
         
     </>
