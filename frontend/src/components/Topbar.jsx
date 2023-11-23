@@ -13,12 +13,12 @@ function Topbar() {
     const navigate = useNavigate()
     const userData = useSelector(state => state.login)
     const isLoggedin = userData.isAutenticated
-    /*useEffect(() => {
+    useEffect(() => {
         console.log(isLoggedin)
         if (!isLoggedin) {
             navigate('/')
         }
-    }, [isLoggedin, navigate])*/
+    }, [isLoggedin, navigate])
 
     const handleLogout = () => {
         dispatch(loginActions.logout)
@@ -41,7 +41,7 @@ function Topbar() {
                         </Grid>
                         <Grid item xs={8} md={5} lg={2}>
                         {userData.userRol==='admin'&&
-                            <Link to='/informes' target='_blank'>
+                            <Link to='/informes'>
                                 <Typography variant='h6' component='h6' className='username'>Informes</Typography>
                             </Link>
                         }
