@@ -42,9 +42,30 @@ async function deleteData (req, res) {
     return result.affectedRows
 }
 
+//SQL EXAMEN
+async function insertDataExamen (req, res) {
+    const data = req.query
+    const result = await db.query(
+        `INSERT INTO usuarios (nombre, login, password, rol) VALUES ('${data.nombre}', '${data.login}', '${data.password}', '${data.rol}')`
+    )
+    return result.affectedRows
+}
+
+async function getDataExamen (req, res) {
+    const rows = await db.query(
+        `SELECT * FROM usuarios`
+    )
+    const data = helper.emptyOrRows(rows)
+    return {
+        data
+    }
+}
+
 //Al final del fichero exporto las funciones getData, insertData y deleteData
 module.exports = {
     getData,
     insertData,
-    deleteData
+    deleteData,
+    insertDataExamen,
+    getDataExamen
 }

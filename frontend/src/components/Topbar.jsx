@@ -6,6 +6,7 @@ import { Button, Typography, AppBar, Container, Toolbar, Grid} from "@mui/materi
 import { loginActions } from "../store/storelogin"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
+import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 
 function Topbar() {
 
@@ -31,7 +32,15 @@ function Topbar() {
                 <Toolbar>
                     <Grid container className="menuContainer">
                         <Grid item xs={8} md={5} lg={2} className="iconGrid">
-                            {userData.userRol ==='user'?<AccountCircleIcon fontSize="large" />:<SupervisorAccountIcon fontSize="large" />}
+                            {userData.userRol ==='user'&&
+                                <AccountCircleIcon fontSize="large" />
+                            }
+                            {userData.userRol === 'admin'&&
+                                <SupervisorAccountIcon fontSize="large" />
+                            }
+                            {userData.userRol === 'invitado'&&
+                                <AccessibilityNewIcon fontSize="large" />
+                            }
                             <Typography variant='h6' component='h6' className='username'>{userData.userName}</Typography>
                         </Grid>
                         <Grid item xs={8} md={5} lg={2}>
@@ -50,6 +59,13 @@ function Topbar() {
                             <Link to='/ayuda'>
                             <Typography variant='h6' component='h6' className='username'>Ayuda</Typography>
                             </Link>
+                        </Grid>
+                        <Grid item xs={8} md={5} lg={2}>
+                        {userData.userRol==='admin'&&
+                            <Link to='/examen'>
+                                <Typography variant='h6' component='h6' className='username'>Usuarios</Typography>
+                            </Link>
+                        }
                         </Grid>
                         <Grid item xs={8} md={5} lg={2}>
                             <Button variant='contained' onClick = {handleLogout}>Salir</Button>

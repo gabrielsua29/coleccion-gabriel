@@ -65,6 +65,25 @@ app.get('/deleteItem', async function(req, res, next) {
     }
 })
 
+app.get('/insertExamen', async function(req, res, next) {
+    try {
+        res.json(await items.insertDataExamen(req, res))
+    } catch (err) {
+        console.error(`Error while inserting`, err.message)
+        next(err)
+    }
+})
+
+app.get('/getExamen', async function(req, res, next) {
+    try {
+        res.json(await items.getDataExamen(req, res ))
+    } catch (err) {
+        console.error(`Error while getting items `, err.message);
+        next(err);
+    }
+})
+
+
 //Iniciamos la API
 app.listen(port)
 console.log('API escuchando en el puerto ' + port)

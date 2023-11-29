@@ -79,7 +79,6 @@ function Home() {
 
     return <>
         <Topbar/>
-
         <Paper elevation={3}>
             <Box component='form' autoComplete='off' onSubmit={handleSaveItem} >
                 <Grid container className="textFieldsContainer">
