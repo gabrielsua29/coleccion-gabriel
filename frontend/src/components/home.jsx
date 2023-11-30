@@ -3,7 +3,7 @@ import React from "react"
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
-import { Button, Grid, Paper, Box, TextField, TableContainer, TableCell, Table, TableHead, TableRow, TableBody } from "@mui/material"
+import { Button, Grid, Paper, Box, TextField, TableContainer, TableCell, Table, TableHead, TableRow, TableBody, Tooltip } from "@mui/material"
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import './home.css'
 import Topbar from "./Topbar"
@@ -126,7 +126,9 @@ function Home() {
                     </Grid>
                     <Grid item xs={1} md={10.5} lg={10}>
                         <br/>
-                        <Button type='submit' variant='contained' className="addButton">Añadir</Button>
+                        <Tooltip title='Añadir' arrow placement='right-end'>
+                            <Button type='submit' variant='contained' className="addButton">Añadir</Button>
+                        </Tooltip>
                     </Grid>
                 </Grid>
             </Box>
@@ -150,9 +152,11 @@ function Home() {
                     <TableRow key={row.id}>
                         {userData.userRol === 'admin' &&
                             <TableCell>
+                            <Tooltip title='Eliminar' arrow placement='right-end'>
                                 <Button onClick={() => handleDeleteItem(row.id)}>
                                     <DeleteForeverIcon />
                                 </Button>
+                            </Tooltip>
                             </TableCell>
                         }
                         <TableCell>{row.nombre}</TableCell>

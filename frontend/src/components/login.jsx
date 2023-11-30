@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Button from '@mui/material/Button'
-import { Avatar, Box, Container, Grid, Paper, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Container, Grid, Paper, TextField, Typography, Tooltip } from '@mui/material';
 import LockPersonRoundedIcon from '@mui/icons-material/LockPersonRounded';
 import { useNavigate } from 'react-router-dom';
 //Importamos el useDispatch del react-redux
@@ -61,7 +61,9 @@ function Login () {
                                 onChange={(Event) => {setLogin({...login, password: Event.target.value})}} className='password_text'>
                             </TextField>
                             <br/><br/>
-                            <Button type='submit' color='secondary' variant='contained' className='login_button'>Iniciar Sesión</Button>
+                            <Tooltip title='Iniciar sesión' arrow placement='right-end'>
+                                <Button type='submit' color='secondary' variant='contained' className='login_button'>Iniciar Sesión</Button>
+                            </Tooltip>
                         </Box>
                     </Paper>
                 </Grid>
