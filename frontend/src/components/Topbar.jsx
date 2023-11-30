@@ -2,7 +2,7 @@ import React from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import { Button, Typography, AppBar, Container, Toolbar, Grid} from "@mui/material"
+import { Button, Typography, AppBar, Container, Toolbar, Grid, Tooltip} from "@mui/material"
 import { loginActions } from "../store/storelogin"
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount'
@@ -56,8 +56,8 @@ function Topbar() {
                         }
                         </Grid>
                         <Grid item xs={8} md={5} lg={2}>
-                            <Link to='/ayuda'>
-                            <Typography variant='h6' component='h6' className='username'>Ayuda</Typography>
+                            <Link to={'/Suárez_Barrera_ErnestoGabriel_EXUT4_Manual.pdf'} target="_blank">
+                                <Typography variant='h6' component='h6' className='username'>Ayuda</Typography>
                             </Link>
                         </Grid>
                         <Grid item xs={8} md={5} lg={2}>
@@ -68,7 +68,9 @@ function Topbar() {
                         }
                         </Grid>
                         <Grid item xs={8} md={5} lg={2}>
-                            <Button variant='contained' onClick = {handleLogout}>Salir</Button>
+                            <Tooltip title='Salir' arrow>
+                                <Button variant='contained' onClick = {handleLogout}>Salir</Button>
+                            </Tooltip>
                         </Grid>
                     </Grid>
                 </Toolbar>

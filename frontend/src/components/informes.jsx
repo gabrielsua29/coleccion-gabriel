@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Topbar from "./Topbar"
-import { Button, Paper } from "@mui/material";
+import { Button, Paper, Tooltip } from "@mui/material";
 import InformeColeccion from "./InformeColeccion";
 import InformeUsuarios from "./InformeUsuarios";
 
@@ -45,8 +45,12 @@ function Informes() {
     return<>
         <Topbar/>
         <Paper elevation={3}>
+        <Tooltip title='Colección informes' arrow placement='bottom'>
             <Button variant='contained' onClick={handleButton}>COLECCIÓN INFORMES</Button>
+        </Tooltip>
+        <Tooltip title='Informe usuarios' arrow placement='bottom'>
             <Button variant='contained' onClick={handleButtonUsuarios}>INFORME USUARIOS</Button>
+        </Tooltip>
         </Paper>
         {isPressed=== true &&
             <InformeColeccion data={item}/>
